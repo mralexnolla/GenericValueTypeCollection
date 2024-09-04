@@ -2,58 +2,57 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class ValueTypeCollection<T> where T : struct  // 1) Constrain to value types
+public class StructCollection<U> where U : struct  // 1) Constrain to value types
 {
     // 2) Private generic collection
-    private List<T> items = new List<T>();
+    private List<U> elements = new List<U>();
 
     // 3) Method to add items to the private collection
-    public void AddItem(T item)
+    public void AddElement(U element)
     {
-        items.Add(item);
+        elements.Add(element);
     }
 
     // 4) Method to return an item from the list
-    public T GetItem(int index)
+    public U GetElement(int position)
     {
-        if (index >= 0 && index < items.Count)
+        if (position >= 0 && position < elements.Count)
         {
-            return items[index];
+            return elements[position];
         }
-        throw new IndexOutOfRangeException("Index is out of range.");
+        throw new IndexOutOfRangeException("Position is out of range.");
     }
 
     // 5) Method to return a sorted collection with the items in descending order
-    public List<T> GetSortedDescending()
+    public List<U> GetSortedDescending()
     {
-        return items.OrderByDescending(x => x).ToList();
+        return elements.OrderByDescending(x => x).ToList();
     }
 }
 
-
-//this is just to test the logic 
-class Program
+// This is just to test the logic 
+class Example
 {
     static void Main(string[] args)
     {
         // Instantiate the generic class with an int type
-        ValueTypeCollection<int> collection = new ValueTypeCollection<int>();
+        StructCollection<int> numbers = new StructCollection<int>();
 
         // Add items to the collection
-        collection.AddItem(5);
-        collection.AddItem(1);
-        collection.AddItem(8);
-        collection.AddItem(3);
+        numbers.AddElement(5);
+        numbers.AddElement(1);
+        numbers.AddElement(8);
+        numbers.AddElement(3);
 
         // Get an item from the collection (e.g., item at index 2)
-        Console.WriteLine($"Item at index 2: {collection.GetItem(2)}");
+        Console.WriteLine($"Item at index 2: {numbers.GetElement(2)}");
 
         // Get the sorted collection in descending order
-        var sortedItems = collection.GetSortedDescending();
+        var sortedNumbers = numbers.GetSortedDescending();
         Console.WriteLine("Items in descending order:");
-        foreach (var item in sortedItems)
+        foreach (var number in sortedNumbers)
         {
-            Console.WriteLine(item);
+            Console.WriteLine(number);
         }
     }
 }
